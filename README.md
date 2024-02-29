@@ -1,3 +1,8 @@
 # vCard_Generator
 
-This is a simple HTML App to help users create basic .vdf files with all the needed informations.
+This is a simple HTML App to help users create basic .vdf files with all the needed information.
+The app is not completed yet.
+
+Please keep in mind that this is my first public project.
+
+Dark/Light mode toggle and better page arrangement will follow.
