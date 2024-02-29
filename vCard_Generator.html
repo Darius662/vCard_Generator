@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vCard Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .additional-fields {
+            margin-bottom: 20px;
+        }
+        .label-select {
+            width: 48%;
+            float: left;
+            box-sizing: border-box;
+            margin-right: 4%;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>vCard Generator</h1>
+    <form id="vCardForm">
+        <div class="label-select">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="label-select">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+        </div>
+
+        <div class="additional-fields clearfix" id="emailFields">
+            <div class="label-select">
+                <label>Email Type:</label>
+                <select class="emailType" name="emailType">
+                    <option value="Home">Home</option>
+                    <option value="Work">Work</option>
+                    <option value="Private">Private</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="label-select">
+                <label>Email:</label>
+                <input type="text" class="email" name="email" required>
+            </div>
+        </div>
+        <button type="button" onclick="addEmailField()">Add Email</button>
+
+        <div class="additional-fields clearfix" id="phoneFields">
+            <div class="label-select">
+                <label>Phone Type:</label>
+                <select class="phoneType" name="phoneType">
+                    <option value="Mobile">Mobile</option>
+                    <option value="Work">Work</option>
+                    <option value="Home">Home</option>
+                    <option value="Main">Main</option>
+                    <option value="WorkFax">Work Fax</option>
+                    <option value="HomeFax">Home Fax</option>
+                    <option value="Pager">Pager</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="label-select">
+                <label>Phone:</label>
+                <input type="text" class="phone" name="phone">
+            </div>
+        </div>
+        <button type="button" onclick="addPhoneField()">Add Phone</button>
+
+        <div class="additional-fields clearfix" id="addressFields">
+            <div class="label-select">
+                <label>Address Type:</label>
+                <select class="addressType" name="addressType">
+                    <option value="Home">Home</option>
+                    <option value="Work">Work</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="label-select">
+                <label>Street:</label>
+                <input type="text" class="street" name="street">
+            </div>
+            <div class="label-select">
+                <label>City:</label>
+                <input type="text" class="city" name="city">
+            </div>
+            <div class="label-select">
+                <label>State:</label>
+                <input type="text" class="state" name="state">
+            </div>
+            <div class="label-select">
+                <label>Zip:</label>
+                <input type="text" class="zip" name="zip">
+            </div>
+            <div class="label-select">
+                <label>Country:</label>
+                <input type="text" class="country" name="country">
+            </div>
+        </div>
+        <button type="button" onclick="addAddressField()">Add Address</button>
+
+        <div class="additional-fields clearfix" id="websiteFields">
+            <div class="label-select">
+                <label>Website Type:</label>
+                <select class="websiteType" name="websiteType">
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="label-select">
+                <label>Website:</label>
+                <input type="text" class="website" name="website">
+            </div>
+        </div>
+        <button type="button" onclick="addWebsiteField()">Add Website</button>
+
+        <div class="additional-fields clearfix" id="socialMediaFields">
+            <div class="label-select">
+                <label>Social Media Type:</label>
+                <select class="socialMediaType" name="socialMediaType">
+                    <option value="Facebook">Facebook</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="label-select">
+                <label>Profile Link:</label>
+                <input type="text" class="profileLink" name="profileLink">
+            </div>
+        </div>
+        <button type="button" onclick="addSocialMediaField()">Add Social Media</button>
+
+        <div class="label-select">
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company">
+        </div>
+
+        <div class="label-select">
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department">
+        </div>
+
+        <div class="label-select">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+        </div>
+
+        <div class="label-select">
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday">
+        </div>
+
+        <div class="label-select">
+            <label for="notes">Notes/Description:</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
+
+        <div class="label-select">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image">
+            <small>Or paste a link:</small>
+            <input type="text" id="imageLink" name="imageLink">
+        </div>
+
+        <button type="button" onclick="generatevCard()">Generate vCard</button>
+    </form>
+
+    <script>
+        function addEmailField() {
+            var emailFields = document.getElementById('emailFields');
+            var newEmailField = document.createElement('div');
+            newEmailField.innerHTML = '<div class="label-select">' +
+                '<label>Email Type:</label>' +
+                '<select class="emailType" name="emailType">' +
+                '<option value="Home">Home</option>' +
+                '<option value="Work">Work</option>' +
+                '<option value="Private">Private</option>' +
+                '<option value="Other">Other</option>' +
+                '</select></div>' +
+                '<div class="label-select">' +
+                '<label>Email:</label>' +
+                '<input type="text" class="email" name="email" required>' +
+                '</div>';
+            emailFields.appendChild(newEmailField);
+        }
+
+        function addPhoneField() {
+            var phoneFields = document.getElementById('phoneFields');
+            var newPhoneField = document.createElement('div');
+            newPhoneField.innerHTML = '<div class="label-select">' +
+                '<label>Phone Type:</label>' +
+                '<select class="phoneType" name="phoneType">' +
+                '<option value="Mobile">Mobile</option>' +
+                '<option value="Work">Work</option>' +
+                '<option value="Home">Home</option>' +
+                '<option value="Main">Main</option>' +
+                '<option value="WorkFax">Work Fax</option>' +
+                '<option value="HomeFax">Home Fax</option>' +
+                '<option value="Pager">Pager</option>' +
+                '<option value="Other">Other</option>' +
+                '</select></div>' +
+                '<div class="label-select">' +
+                '<label>Phone:</label>' +
+                '<input type="text" class="phone" name="phone">' +
+                '</div>';
+            phoneFields.appendChild(newPhoneField);
+        }
+
+        function addAddressField() {
+            var addressFields = document.getElementById('addressFields');
+            var newAddressField = document.createElement('div');
+            newAddressField.innerHTML = '<div class="label-select">' +
+                '<label>Address Type:</label>' +
+                '<select class="addressType" name="addressType">' +
+                '<option value="Home">Home</option>' +
+                '<option value="Work">Work</option>' +
+                '<option value="Other">Other</option>' +
+                '</select></div>' +
+                '<div class="label-select">' +
+                '<label>Street:</label>' +
+                '<input type="text" class="street" name="street">' +
+                '</div>' +
+                '<div class="label-select">' +
+                '<label>City:</label>' +
+                '<input type="text" class="city" name="city">' +
+                '</div>' +
+                '<div class="label-select">' +
+                '<label>State:</label>' +
+                '<input type="text" class="state" name="state">' +
+                '</div>' +
+                '<div class="label-select">' +
+                '<label>Zip:</label>' +
+                '<input type="text" class="zip" name="zip">' +
+                '</div>' +
+                '<div class="label-select">' +
+                '<label>Country:</label>' +
+                '<input type="text" class="country" name="country">' +
+                '</div>';
+            addressFields.appendChild(newAddressField);
+        }
+
+        function addWebsiteField() {
+            var websiteFields = document.getElementById('websiteFields');
+            var newWebsiteField = document.createElement('div');
+            newWebsiteField.innerHTML = '<div class="label-select">' +
+                '<label>Website Type:</label>' +
+                '<select class="websiteType" name="websiteType">' +
+                '<option value="Personal">Personal</option>' +
+                '<option value="Work">Work</option>' +
+                '<option value="Other">Other</option>' +
+                '</select></div>' +
+                '<div class="label-select">' +
+                '<label>Website:</label>' +
+                '<input type="text" class="website" name="website">' +
+                '</div>';
+            websiteFields.appendChild(newWebsiteField);
+        }
+
+        function addSocialMediaField() {
+            var socialMediaFields = document.getElementById('socialMediaFields');
+            var newSocialMediaField = document.createElement('div');
+            newSocialMediaField.innerHTML = '<div class="label-select">' +
+                '<label>Social Media Type:</label>' +
+                '<select class="socialMediaType" name="socialMediaType">' +
+                '<option value="Facebook">Facebook</option>' +
+                '<option value="Twitter">Twitter</option>' +
+                '<option value="LinkedIn">LinkedIn</option>' +
+                '<option value="Instagram">Instagram</option>' +
+                '<option value="Other">Other</option>' +
+                '</select></div>' +
+                '<div class="label-select">' +
+                '<label>Profile Link:</label>' +
+                '<input type="text" class="profileLink" name="profileLink">' +
+                '</div>';
+            socialMediaFields.appendChild(newSocialMediaField);
+        }
+
+        function generatevCard() {
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var emailFields = document.querySelectorAll('.email');
+            var emailTypes = document.querySelectorAll('.emailType');
+            var phoneFields = document.querySelectorAll('.phone');
+            var phoneTypes = document.querySelectorAll('.phoneType');
+            var addressFields = document.querySelectorAll('.addressType');
+            var streets = document.querySelectorAll('.street');
+            var cities = document.querySelectorAll('.city');
+            var states = document.querySelectorAll('.state');
+            var zips = document.querySelectorAll('.zip');
+            var countries = document.querySelectorAll('.country');
+            var websiteFields = document.querySelectorAll('.website');
+            var websiteTypes = document.querySelectorAll('.websiteType');
+            var socialMediaFields = document.querySelectorAll('.profileLink');
+            var socialMediaTypes = document.querySelectorAll('.socialMediaType');
+            var company = document.getElementById('company').value;
+            var department = document.getElementById('department').value;
+            var title = document.getElementById('title').value;
+            var birthday = document.getElementById('birthday').value;
+            var notes = document.getElementById('notes').value;
+            var imageLink = document.getElementById('imageLink').value;
+
+            var vCardData = 'BEGIN:VCARD\n';
+            vCardData += 'VERSION:3.0\n';
+            vCardData += 'FN:' + firstName + ' ' + lastName + '\n';
+            vCardData += 'N:' + lastName + ';' + firstName + ';;;\n';
+
+            emailFields.forEach(function(emailField, index) {
+                var email = emailField.value.trim();
+                var emailType = emailTypes[index].value;
+                if (email !== '') {
+                    vCardData += 'EMAIL;TYPE=' + emailType + ':' + email + '\n';
+                }
+            });
+
+            phoneFields.forEach(function(phoneField, index) {
+                var phone = phoneField.value.trim();
+                var phoneType = phoneTypes[index].value;
+                if (phone !== '') {
+                    vCardData += 'TEL;TYPE=' + phoneType + ':' + phone + '\n';
+                }
+            });
+
+            addressFields.forEach(function(addressField, index) {
+                var addressType = addressField.value;
+                var street = streets[index].value.trim();
+                var city = cities[index].value.trim();
+                var state = states[index].value.trim();
+                var zip = zips[index].value.trim();
+                var country = countries[index].value.trim();
+
+                if (street !== '' || city !== '' || state !== '' || zip !== '' || country !== '') {
+                    vCardData += 'ADR;TYPE=' + addressType + ':;;' + street + ';' + city + ';' + state + ';' + zip + ';' + country + '\n';
+                }
+            });
+
+            websiteFields.forEach(function(websiteField, index) {
+                var website = websiteField.value.trim();
+                var websiteType = websiteTypes[index].value;
+                if (website !== '') {
+                    vCardData += 'URL;TYPE=' + websiteType + ':' + website + '\n';
+                }
+            });
+
+            socialMediaFields.forEach(function(socialMediaField, index) {
+                var profileLink = socialMediaField.value.trim();
+                var socialMediaType = socialMediaTypes[index].value;
+                if (profileLink !== '') {
+                    vCardData += 'X-SOCIALPROFILE;TYPE=' + socialMediaType + ':' + profileLink + '\n';
+                }
+            });
+
+            if (company !== '') {
+                vCardData += 'ORG:' + company + '\n';
+            }
+
+            if (department !== '') {
+                vCardData += 'ORG;TYPE=DEPT:' + department + '\n';
+            }
+
+            if (title !== '') {
+                vCardData += 'TITLE:' + title + '\n';
+            }
+
+            if (birthday !== '') {
+                vCardData += 'BDAY:' + birthday + '\n';
+            }
+
+            if (notes !== '') {
+                vCardData += 'NOTE:' + notes + '\n';
+            }
+
+            if (imageLink !== '') {
+                vCardData += 'PHOTO;VALUE=URL:' + imageLink + '\n';
+            }
+
+            vCardData += 'END:VCARD\n';
+
+            var blob = new Blob([vCardData], { type: 'text/vcard' });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = firstName + lastName + '.vcf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
