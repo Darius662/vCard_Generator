@@ -1,5 +1,5 @@
 # vCard_Generator
-
+**_The app is not intended to be used productively_**
 This is a simple HTML App to help users create basic .vdf files with all the needed information.
 The app is not completed yet.
 
